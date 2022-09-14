@@ -12,6 +12,7 @@ namespace dmApp {
 enum MessageId
 {
     MSG_ADS_INITED = 1,
+    MSG_INTER_LOADED = 2,
     MSG_NOT_SUPPORTED = 100,
 	MSG_JSON_ERROR = 101,
 };

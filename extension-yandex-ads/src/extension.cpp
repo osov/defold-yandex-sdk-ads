@@ -16,14 +16,7 @@ namespace dmApp {
 static int Lua_Initialize(lua_State* L)
 {
    DM_LUA_STACK_CHECK(L, 0);
-    if (lua_type(L, 1) != LUA_TSTRING) {
-        char msg[256];
-        snprintf(msg, sizeof(msg), "Expected string, got %s. Wrong type for Initialize UnitId variable '%s'.", luaL_typename(L, 1), lua_tostring(L, 1));
-        luaL_error(L, msg);
-        return 0;
-    }
-    const char* unitId_lua = luaL_checkstring(L, 1);
-    Initialize(unitId_lua);
+    Initialize();
     return 0; 
 }
 
@@ -34,10 +27,25 @@ static int Lua_SetCallback(lua_State* L)
     return 0;
 }
 
+static int Lua_LoadInterstitial(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 0);
+    if (lua_type(L, 1) != LUA_TSTRING) {
+        char msg[256];
+        snprintf(msg, sizeof(msg), "Expected string, got %s. Wrong type for Interstitial UnitId variable '%s'.", luaL_typename(L, 1), lua_tostring(L, 1));
+        luaL_error(L, msg);
+        return 0;
+    }
+    const char* unitId_lua = luaL_checkstring(L, 1);
+    LoadInterstitial(unitId_lua);
+    return 0;
+}
+
 static const luaL_reg Module_methods[] =
 {
     {"initialize", Lua_Initialize},
     {"set_callback", Lua_SetCallback},
+    {"load_interstitial", Lua_LoadInterstitial},
     {0, 0}
 };
 
@@ -51,6 +59,7 @@ static void LuaInit(lua_State* L)
     lua_setfield(L, -2, #name); \
 
     SETCONSTANT(MSG_ADS_INITED)
+    SETCONSTANT(MSG_INTER_LOADED)
     SETCONSTANT(MSG_NOT_SUPPORTED)
     SETCONSTANT(MSG_JSON_ERROR)
 

@@ -46,6 +46,7 @@ public class ExtensionJNI {
   public static native void AddToQueue(int msg, String json);
 
   private static final int MSG_ADS_INITED = 1;
+  private static final int MSG_INTER_LOADED = 2;
   private Activity activity;
 
   public ExtensionJNI(Activity mainActivity) {
@@ -65,7 +66,16 @@ public class ExtensionJNI {
         });
       }
     });
+  }
 
+  public void loadInterstitial(final String unitId) {
+    activity.runOnUiThread(new Runnable() {
+      @Override
+      public void run() {
+            Log.d(TAG, "loadInterstitial");
+            sendSimpleMessage(MSG_INTER_LOADED, "init", unitId);
+      }
+    });
   }
 
   private String getJsonConversionErrorMessage(String messageText) {
