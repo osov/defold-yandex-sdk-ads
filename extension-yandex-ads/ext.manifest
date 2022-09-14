@@ -1,0 +1,6 @@
+name: "YandexSdkAds"
+
+platforms:
+    android:
+        context:
+            aaptExtraPackages: ['com.yandex.android.mobileads', 'com.yandex.mobile.ads']

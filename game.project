@@ -1,0 +1,29 @@
+[project]
+title = YandexSdkAds
+version = 1.0
+
+[bootstrap]
+main_collection = /main/main.collectionc
+
+[input]
+game_binding = /input/game.input_bindingc
+
+[display]
+width = 720
+height = 1280
+
+[script]
+shared_state = 1
+
+[ios]
+bundle_identifier = com.yandex.ads
+
+[android]
+package = com.yandex.ads
+immersive_mode = 1
+display_cutout = 0
+
+
+
+[library]
+include_dirs = extension-yandex-ads
