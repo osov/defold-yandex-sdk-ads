@@ -88,7 +88,7 @@ namespace dmYandexAds
     {
         dmAndroid::ThreadAttacher threadAttacher;
         JNIEnv *env = threadAttacher.GetEnv();
-        jclass cls = dmAndroid::LoadClass(env, "com.defold.extension.ExtensionJNI");
+        jclass cls = dmAndroid::LoadClass(env, "com.defold.extension.ExtensionYandexAds");
 
         InitJNIMethods(env, cls);
 
