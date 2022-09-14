@@ -39,7 +39,7 @@ import com.yandex.mobile.ads.rewarded.Reward;
 import com.yandex.mobile.ads.rewarded.RewardedAd;
 import com.yandex.mobile.ads.rewarded.RewardedAdEventListener;
 
-public class ExtensionJNI {
+public class ExtensionYandexAds {
 
   private static final String TAG = "ExtensionYandexAds";
 
@@ -49,7 +49,7 @@ public class ExtensionJNI {
   private static final int MSG_INTER_LOADED = 2;
   private Activity activity;
 
-  public ExtensionJNI(Activity mainActivity) {
+  public ExtensionYandexAds(Activity mainActivity) {
     activity = mainActivity;
   }
 
