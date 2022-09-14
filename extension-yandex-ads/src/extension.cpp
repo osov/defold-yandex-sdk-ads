@@ -11,7 +11,7 @@
 #include "extension_callback_private.h"
 #include "utils/LuaUtils.h"
 
-namespace dmApp {
+namespace dmYandexAds {
 
 static int Lua_Initialize(lua_State* L)
 {
@@ -108,9 +108,9 @@ static void OnEventApp(dmExtension::Params* params, const dmExtension::Event* ev
     }
  }
 
-} //namespace dmApp
+}
 
-DM_DECLARE_EXTENSION(EXTENSION_NAME, LIB_NAME, dmApp::AppInitializeApp, dmApp::AppFinalizeApp, dmApp::InitializeApp, dmApp::UpdateApp, dmApp::OnEventApp, dmApp::FinalizeApp)
+DM_DECLARE_EXTENSION(EXTENSION_NAME, LIB_NAME, dmYandexAds::AppInitializeApp, dmYandexAds::AppFinalizeApp, dmYandexAds::InitializeApp, dmYandexAds::UpdateApp, dmYandexAds::OnEventApp, dmYandexAds::FinalizeApp)
 
 #else
 

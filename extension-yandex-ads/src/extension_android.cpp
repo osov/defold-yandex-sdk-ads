@@ -8,11 +8,11 @@
 JNIEXPORT void JNICALL Java_com_defold_extension_ExtensionYandexAds_AddToQueue(JNIEnv *env, jclass cls, jint jmsg, jstring jjson)
 {
     const char *json = env->GetStringUTFChars(jjson, 0);
-    dmApp::AddToQueueCallback((dmApp::MessageId)jmsg, json);
+    dmYandexAds::AddToQueueCallback((dmYandexAds::MessageId)jmsg, json);
     env->ReleaseStringUTFChars(jjson, json);
 }
 
-namespace dmApp
+namespace dmYandexAds
 {
 
     struct App
@@ -112,6 +112,6 @@ namespace dmApp
         //
     }
 
-} // namespace dmApp
+}
 
 #endif

@@ -2,7 +2,7 @@
 
 #pragma once
 
-namespace dmApp {
+namespace dmYandexAds {
 
 void Initialize_Ext();
 
@@ -12,6 +12,6 @@ void LoadInterstitial(const char* unitId);
 void ActivateApp();
 
 
-} //namespace dmApp
+}
 
 #endif

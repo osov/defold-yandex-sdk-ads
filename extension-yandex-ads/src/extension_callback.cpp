@@ -4,7 +4,7 @@
 #include "utils/LuaUtils.h"
 #include <stdlib.h>
 
-namespace dmApp {
+namespace dmYandexAds {
 
 static dmScript::LuaCallbackInfo* m_luaCallback = 0x0;
 static dmArray<CallbackData> m_callbacksQueue;
