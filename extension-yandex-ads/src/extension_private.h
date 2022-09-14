@@ -7,6 +7,7 @@ namespace dmApp {
 void Initialize_Ext();
 
 void Initialize();
+void LoadInterstitial(const char* unitId);
 
 void ActivateApp();
 
