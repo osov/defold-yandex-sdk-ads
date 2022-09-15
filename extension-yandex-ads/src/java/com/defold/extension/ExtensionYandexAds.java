@@ -314,7 +314,7 @@ public class ExtensionYandexAds {
           @Override
           public void onReturnedToApplication() {
           }
-      
+
         });
 
         // Загрузка объявления.
@@ -344,6 +344,9 @@ public class ExtensionYandexAds {
   }
 
   public void showBanner() {
+    if (!isBannerLoaded()) {
+      return;
+    }
     activity.runOnUiThread(new Runnable() {
       @Override
       public void run() {
@@ -356,11 +359,15 @@ public class ExtensionYandexAds {
   }
 
   public void hideBanner() {
+    if (!isBannerLoaded()) {
+      return;
+    }
     activity.runOnUiThread(new Runnable() {
       @Override
       public void run() {
         Log.d(TAG, "hideBanner");
-        mBannerLayout.setVisibility(View.INVISIBLE);
+        if (mBannerLayout != null)
+          mBannerLayout.setVisibility(View.INVISIBLE);
       }
     });
   }
