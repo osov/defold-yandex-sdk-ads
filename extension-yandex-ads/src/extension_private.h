@@ -1,27 +1,33 @@
-#if defined(DM_PLATFORM_ANDROID) 
+#if defined(DM_PLATFORM_ANDROID)
 
 #pragma once
 
-namespace dmYandexAds {
+namespace dmYandexAds
+{
 
-void Initialize_Ext();
-void ActivateApp();
+    enum BannerSize
+    {
+        BANNER_320_50 = 0
+    };
 
-void Initialize();
+    void Initialize_Ext();
+    void ActivateApp();
 
-void LoadInterstitial(const char* unitId);
-bool IsInterstitialLoaded();
-void ShowInterstitial();
+    void Initialize();
 
-void LoadRewarded(const char* unitId);
-bool IsRewardedLoaded();
-void ShowRewarded();
+    void LoadInterstitial(const char *unitId);
+    bool IsInterstitialLoaded();
+    void ShowInterstitial();
 
-void LoadBanner(const char* unitId, BannerSize bannerSize);
-bool IsBannerLoaded();
-void DestroyBanner();
-void ShowBanner();
-void HideBanner();
+    void LoadRewarded(const char *unitId);
+    bool IsRewardedLoaded();
+    void ShowRewarded();
+
+    void LoadBanner(const char *unitId, BannerSize bannerSize);
+    bool IsBannerLoaded();
+    void DestroyBanner();
+    void ShowBanner();
+    void HideBanner();
 
 }
 

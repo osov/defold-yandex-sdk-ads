@@ -27,11 +27,6 @@ namespace dmYandexAds
         EVENT_REWARDED = 7
     };
 
-    enum BannerSize
-    {
-        BANNER_320_50 = 0
-    };
-
     struct CallbackData
     {
         MessageId msg;
