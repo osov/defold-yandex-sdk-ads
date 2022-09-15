@@ -4,36 +4,46 @@
 #include "extension_private.h"
 #include <dmsdk/sdk.h>
 
-namespace dmYandexAds {
-
-// The same events and messages are in ExtensionJNI.java
-// If you change enums here, pls nake sure you update the constants there as well
-
-enum MessageId
+namespace dmYandexAds
 {
-    MSG_ADS_INITED = 1,
-    MSG_INTER_LOADED = 2,
-    MSG_NOT_SUPPORTED = 100,
-	MSG_JSON_ERROR = 101,
-};
 
-enum MessageEvent
-{
-	EVENT_NONE = 0,
-};
+    enum MessageId
+    {
+        MSG_ADS_INITED = 0,
+        MSG_INTERSTITIAL = 1,
+        MSG_REWARDED = 2,
+        MSG_BANNER = 3
+    };
 
-struct CallbackData
-{
-    MessageId msg;
-    char* json;
-};
+    enum MessageEvent
+    {
+        EVENT_LOADED = 0,
+        EVENT_ERROR_LOAD = 1,
+        EVENT_SHOWN = 2,
+        EVENT_DISMISSED = 3,
+        EVENT_CLICKED = 4,
+        EVENT_IMPRESSION = 5,
+        EVENT_NOT_LOADED = 6,
+        EVENT_REWARDED = 7,
+    };
 
-void SetLuaCallback(lua_State* L, int pos);
-void UpdateCallback();
-void InitializeCallback();
-void FinalizeCallback();
+    enum BannerSize
+    {
+        BANNER_320_50 = 0
+    }
 
-void AddToQueueCallback(MessageId type, const char*json);
+    struct CallbackData
+    {
+        MessageId msg;
+        char *json;
+    };
+
+    void SetLuaCallback(lua_State *L, int pos);
+    void UpdateCallback();
+    void InitializeCallback();
+    void FinalizeCallback();
+
+    void AddToQueueCallback(MessageId type, const char *json);
 
 }
 

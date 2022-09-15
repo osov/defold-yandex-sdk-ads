@@ -20,7 +20,20 @@ namespace dmYandexAds
         jobject m_AppJNI;
 
         jmethodID m_Initialize;
+
         jmethodID m_LoadInterstitial;
+        jmethodID m_IsInterstitialLoaded;
+        jmethodID m_ShowInterstitial;
+
+        jmethodID m_LoadRewarded;
+        jmethodID m_IsRewardedLoaded;
+        jmethodID m_ShowRewarded;
+
+        jmethodID m_LoadBanner;
+        jmethodID m_IsBannerLoaded;
+        jmethodID m_DestroyBanner;
+        jmethodID m_ShowBanner;
+        jmethodID m_HideBanner;
     };
 
     static App g_app;
@@ -81,7 +94,20 @@ namespace dmYandexAds
     static void InitJNIMethods(JNIEnv *env, jclass cls)
     {
         g_app.m_Initialize = env->GetMethodID(cls, "initialize", "()V");
+
         g_app.m_LoadInterstitial = env->GetMethodID(cls, "loadInterstitial", "(Ljava/lang/String;)V");
+        g_app.m_IsInterstitialLoaded = env->GetMethodID(cls, "isInterstitialLoaded", "()Z");
+        g_app.m_ShowInterstitial = env->GetMethodID(cls, "showInterstitial", "()V");
+
+        g_app.m_LoadRewarded = env->GetMethodID(cls, "loadRewarded", "(Ljava/lang/String;)V");
+        g_app.m_IsRewardedLoaded = env->GetMethodID(cls, "isRewardedLoaded", "()Z");
+        g_app.m_ShowRewarded = env->GetMethodID(cls, "showRewarded", "()V");
+
+        g_app.m_LoadBanner = env->GetMethodID(cls, "loadBanner", "(Ljava/lang/String;I)V");
+        g_app.m_DestroyBanner = env->GetMethodID(cls, "destroyBanner", "()V");
+        g_app.m_ShowBanner = env->GetMethodID(cls, "showBanner", "(I)V");
+        g_app.m_HideBanner = env->GetMethodID(cls, "hideBanner", "()V");
+        g_app.m_IsBannerLoaded = env->GetMethodID(cls, "isBannerLoaded", "()Z");
     }
 
     void Initialize_Ext()
@@ -97,20 +123,76 @@ namespace dmYandexAds
         g_app.m_AppJNI = env->NewGlobalRef(env->NewObject(cls, jni_constructor, threadAttacher.GetActivity()->clazz));
     }
 
+    void ActivateApp()
+    {
+    }
+
     void Initialize()
     {
         CallVoidMethod(g_app.m_AppJNI, g_app.m_Initialize);
     }
+
+    // ------------------------------------------------------------------------------------------
 
     void LoadInterstitial(const char *unitId)
     {
         CallVoidMethodChar(g_app.m_AppJNI, g_app.m_LoadInterstitial, unitId);
     }
 
-    void ActivateApp()
+    bool IsInterstitialLoaded()
     {
-        //
+        return CallBoolMethod(g_app.m_AdmobJNI, g_app.m_IsInterstitialLoaded);
     }
+
+    void ShowInterstitial()
+    {
+        CallVoidMethod(g_app.m_AdmobJNI, g_app.m_ShowInterstitial);
+    }
+
+    // ------------------------------------------------------------------------------------------
+
+    void LoadRewarded(const char *unitId)
+    {
+        CallVoidMethodChar(g_app.m_AdmobJNI, g_app.m_LoadRewarded, unitId);
+    }
+
+    bool IsRewardedLoaded()
+    {
+        return CallBoolMethod(g_app.m_AdmobJNI, g_app.m_IsRewardedLoaded);
+    }
+
+    void ShowRewarded()
+    {
+        CallVoidMethod(g_app.m_AdmobJNI, g_app.m_ShowRewarded);
+    }
+
+    // ------------------------------------------------------------------------------------------
+
+    void LoadBanner(const char *unitId, BannerSize bannerSize)
+    {
+        CallVoidMethodCharInt(g_app.m_AdmobJNI, g_app.m_LoadBanner, unitId, (int)bannerSize);
+    }
+
+    void DestroyBanner()
+    {
+        CallVoidMethod(g_app.m_AdmobJNI, g_app.m_DestroyBanner);
+    }
+
+    void ShowBanner(BannerPosition bannerPos)
+    {
+        CallVoidMethodInt(g_app.m_AdmobJNI, g_app.m_ShowBanner, (int)bannerPos);
+    }
+
+    void HideBanner()
+    {
+        CallVoidMethod(g_app.m_AdmobJNI, g_app.m_HideBanner);
+    }
+
+    bool IsBannerLoaded()
+    {
+        return CallBoolMethod(g_app.m_AdmobJNI, g_app.m_IsBannerLoaded);
+    }
+    // ------------------------------------------------------------------------------------------
 
 }
 
