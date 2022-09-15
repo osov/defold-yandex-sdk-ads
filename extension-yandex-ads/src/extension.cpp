@@ -105,7 +105,7 @@ namespace dmYandexAds
             return 0;
         }
         const char *unitId_lua = luaL_checkstring(L, 1);
-        BannerSize bannerSize_lua = SIZE_ADAPTIVE_BANNER;
+        BannerSize bannerSize_lua = BANNER_320_50;
         if (lua_type(L, 2) != LUA_TNONE)
         {
             bannerSize_lua = (BannerSize)luaL_checknumber(L, 2);
@@ -132,12 +132,7 @@ namespace dmYandexAds
     static int Lua_ShowBanner(lua_State *L)
     {
         DM_LUA_STACK_CHECK(L, 0);
-        BannerPosition bannerPos_lua = POS_NONE;
-        if (lua_type(L, 1) != LUA_TNONE)
-        {
-            bannerPos_lua = (BannerPosition)luaL_checknumber(L, 1);
-        }
-        ShowBanner(bannerPos_lua);
+        ShowBanner();
         return 0;
     }
 

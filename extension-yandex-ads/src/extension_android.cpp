@@ -178,9 +178,9 @@ namespace dmYandexAds
         CallVoidMethod(g_app.m_AppJNI, g_app.m_DestroyBanner);
     }
 
-    void ShowBanner(BannerPosition bannerPos)
+    void ShowBanner()
     {
-        CallVoidMethodInt(g_app.m_AppJNI, g_app.m_ShowBanner, (int)bannerPos);
+        CallVoidMethod(g_app.m_AppJNI, g_app.m_ShowBanner);
     }
 
     void HideBanner()

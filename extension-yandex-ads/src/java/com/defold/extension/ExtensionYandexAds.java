@@ -343,7 +343,7 @@ public class ExtensionYandexAds {
     });
   }
 
-  public void showBanner(final int pos) {
+  public void showBanner() {
     activity.runOnUiThread(new Runnable() {
       @Override
       public void run() {
