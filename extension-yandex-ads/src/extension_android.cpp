@@ -141,56 +141,56 @@ namespace dmYandexAds
 
     bool IsInterstitialLoaded()
     {
-        return CallBoolMethod(g_app.m_AdmobJNI, g_app.m_IsInterstitialLoaded);
+        return CallBoolMethod(g_app.m_AppJNI, g_app.m_IsInterstitialLoaded);
     }
 
     void ShowInterstitial()
     {
-        CallVoidMethod(g_app.m_AdmobJNI, g_app.m_ShowInterstitial);
+        CallVoidMethod(g_app.m_AppJNI, g_app.m_ShowInterstitial);
     }
 
     // ------------------------------------------------------------------------------------------
 
     void LoadRewarded(const char *unitId)
     {
-        CallVoidMethodChar(g_app.m_AdmobJNI, g_app.m_LoadRewarded, unitId);
+        CallVoidMethodChar(g_app.m_AppJNI, g_app.m_LoadRewarded, unitId);
     }
 
     bool IsRewardedLoaded()
     {
-        return CallBoolMethod(g_app.m_AdmobJNI, g_app.m_IsRewardedLoaded);
+        return CallBoolMethod(g_app.m_AppJNI, g_app.m_IsRewardedLoaded);
     }
 
     void ShowRewarded()
     {
-        CallVoidMethod(g_app.m_AdmobJNI, g_app.m_ShowRewarded);
+        CallVoidMethod(g_app.m_AppJNI, g_app.m_ShowRewarded);
     }
 
     // ------------------------------------------------------------------------------------------
 
     void LoadBanner(const char *unitId, BannerSize bannerSize)
     {
-        CallVoidMethodCharInt(g_app.m_AdmobJNI, g_app.m_LoadBanner, unitId, (int)bannerSize);
+        CallVoidMethodCharInt(g_app.m_AppJNI, g_app.m_LoadBanner, unitId, (int)bannerSize);
     }
 
     void DestroyBanner()
     {
-        CallVoidMethod(g_app.m_AdmobJNI, g_app.m_DestroyBanner);
+        CallVoidMethod(g_app.m_AppJNI, g_app.m_DestroyBanner);
     }
 
     void ShowBanner(BannerPosition bannerPos)
     {
-        CallVoidMethodInt(g_app.m_AdmobJNI, g_app.m_ShowBanner, (int)bannerPos);
+        CallVoidMethodInt(g_app.m_AppJNI, g_app.m_ShowBanner, (int)bannerPos);
     }
 
     void HideBanner()
     {
-        CallVoidMethod(g_app.m_AdmobJNI, g_app.m_HideBanner);
+        CallVoidMethod(g_app.m_AppJNI, g_app.m_HideBanner);
     }
 
     bool IsBannerLoaded()
     {
-        return CallBoolMethod(g_app.m_AdmobJNI, g_app.m_IsBannerLoaded);
+        return CallBoolMethod(g_app.m_AppJNI, g_app.m_IsBannerLoaded);
     }
     // ------------------------------------------------------------------------------------------
 
