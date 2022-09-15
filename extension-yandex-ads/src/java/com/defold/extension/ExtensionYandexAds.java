@@ -285,7 +285,7 @@ public class ExtensionYandexAds {
               view.destroy();
               return;
             }
-            showBanner();
+            //showBanner();
             sendSimpleMessage(MSG_BANNER, EVENT_LOADED);
           }
 
