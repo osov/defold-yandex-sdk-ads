@@ -1,5 +1,6 @@
 package com.defold.extension;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import android.util.Log;
 import android.app.Activity;
@@ -195,7 +196,6 @@ public class ExtensionYandexAds {
 
           @Override
           public void onAdLoaded() {
-            rewarded_video_ad_is_loaded = true;
             Log.d(TAG, "rewarded:onAdLoaded");
             sendSimpleMessage(MSG_REWARDED, EVENT_LOADED);
           }
