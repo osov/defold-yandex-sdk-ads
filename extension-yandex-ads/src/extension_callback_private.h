@@ -30,7 +30,7 @@ namespace dmYandexAds
     enum BannerSize
     {
         BANNER_320_50 = 0
-    }
+    };
 
     struct CallbackData
     {
