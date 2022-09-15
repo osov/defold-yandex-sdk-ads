@@ -172,27 +172,27 @@ namespace dmYandexAds
         DM_LUA_STACK_CHECK(L, 0);
         luaL_register(L, MODULE_NAME, Module_methods);
 
-#define SETCONSTANT(name)                \
-    lua_pushnumber(L, (lua_Number)name); \
-    lua_setfield(L, -2, #name);
+        #define SETCONSTANT(name)                \
+            lua_pushnumber(L, (lua_Number)name); \
+            lua_setfield(L, -2, #name);
 
-    SETCONSTANT(MSG_ADS_INITED)
-    SETCONSTANT(MSG_INTERSTITIAL)
-    SETCONSTANT(MSG_REWARDED)
-    SETCONSTANT(MSG_BANNER)
+            SETCONSTANT(MSG_ADS_INITED)
+            SETCONSTANT(MSG_INTERSTITIAL)
+            SETCONSTANT(MSG_REWARDED)
+            SETCONSTANT(MSG_BANNER)
 
-    SETCONSTANT(EVENT_LOADED)
-    SETCONSTANT(EVENT_ERROR_LOAD)
-    SETCONSTANT(EVENT_SHOWN)
-    SETCONSTANT(EVENT_DISMISSED)
-    SETCONSTANT(EVENT_CLICKED)
-    SETCONSTANT(EVENT_IMPRESSION)
-    SETCONSTANT(EVENT_NOT_LOADED)
-    SETCONSTANT(EVENT_REWARDED)
+            SETCONSTANT(EVENT_LOADED)
+            SETCONSTANT(EVENT_ERROR_LOAD)
+            SETCONSTANT(EVENT_SHOWN)
+            SETCONSTANT(EVENT_DISMISSED)
+            SETCONSTANT(EVENT_CLICKED)
+            SETCONSTANT(EVENT_IMPRESSION)
+            SETCONSTANT(EVENT_NOT_LOADED)
+            SETCONSTANT(EVENT_REWARDED)
 
-    SETCONSTANT(BANNER_320_50)
+            SETCONSTANT(BANNER_320_50)
 
-#undef SETCONSTANT
+        #undef SETCONSTANT
 
         lua_pop(L, 1);
     }
