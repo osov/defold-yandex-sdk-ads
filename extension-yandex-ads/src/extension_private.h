@@ -20,7 +20,7 @@ void ShowRewarded();
 void LoadBanner(const char* unitId, BannerSize bannerSize);
 bool IsBannerLoaded();
 void DestroyBanner();
-void ShowBanner(BannerPosition bannerPos);
+void ShowBanner();
 void HideBanner();
 
 }
