@@ -164,35 +164,35 @@ namespace dmYandexAds
             {"show_banner", Lua_ShowBanner},
             {"hide_banner", Lua_HideBanner},
 
-            {0, 0}
-        };
+            {0, 0}};
 
     static void LuaInit(lua_State *L)
     {
         DM_LUA_STACK_CHECK(L, 0);
         luaL_register(L, MODULE_NAME, Module_methods);
 
-        #define SETCONSTANT(name)                \
-            lua_pushnumber(L, (lua_Number)name); \
-            lua_setfield(L, -2, #name);
+#define SETCONSTANT(name)                \
+    lua_pushnumber(L, (lua_Number)name); \
+    lua_setfield(L, -2, #name);
 
-            SETCONSTANT(MSG_ADS_INITED)
-            SETCONSTANT(MSG_INTERSTITIAL)
-            SETCONSTANT(MSG_REWARDED)
-            SETCONSTANT(MSG_BANNER)
+        SETCONSTANT(MSG_ADS_INITED)
+        SETCONSTANT(MSG_INTERSTITIAL)
+        SETCONSTANT(MSG_REWARDED)
+        SETCONSTANT(MSG_BANNER)
 
-            SETCONSTANT(EVENT_LOADED)
-            SETCONSTANT(EVENT_ERROR_LOAD)
-            SETCONSTANT(EVENT_SHOWN)
-            SETCONSTANT(EVENT_DISMISSED)
-            SETCONSTANT(EVENT_CLICKED)
-            SETCONSTANT(EVENT_IMPRESSION)
-            SETCONSTANT(EVENT_NOT_LOADED)
-            SETCONSTANT(EVENT_REWARDED)
+        SETCONSTANT(EVENT_LOADED)
+        SETCONSTANT(EVENT_ERROR_LOAD)
+        SETCONSTANT(EVENT_SHOWN)
+        SETCONSTANT(EVENT_DISMISSED)
+        SETCONSTANT(EVENT_CLICKED)
+        SETCONSTANT(EVENT_IMPRESSION)
+        SETCONSTANT(EVENT_NOT_LOADED)
+        SETCONSTANT(EVENT_REWARDED)
+        SETCONSTANT(EVENT_DESTROYED)
 
-            SETCONSTANT(BANNER_320_50)
+        SETCONSTANT(BANNER_320_50)
 
-        #undef SETCONSTANT
+#undef SETCONSTANT
 
         lua_pop(L, 1);
     }
@@ -236,7 +236,6 @@ namespace dmYandexAds
             break;
         }
     }
-
 }
 
 DM_DECLARE_EXTENSION(EXTENSION_NAME, LIB_NAME, dmYandexAds::AppInitializeApp, dmYandexAds::AppFinalizeApp, dmYandexAds::InitializeApp, dmYandexAds::UpdateApp, dmYandexAds::OnEventApp, dmYandexAds::FinalizeApp)

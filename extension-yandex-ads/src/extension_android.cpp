@@ -34,6 +34,7 @@ namespace dmYandexAds
         jmethodID m_DestroyBanner;
         jmethodID m_ShowBanner;
         jmethodID m_HideBanner;
+        jmethodID m_UpdateBannerLayout;
     };
 
     static App g_app;
@@ -108,6 +109,7 @@ namespace dmYandexAds
         g_app.m_ShowBanner = env->GetMethodID(cls, "showBanner", "()V");
         g_app.m_HideBanner = env->GetMethodID(cls, "hideBanner", "()V");
         g_app.m_IsBannerLoaded = env->GetMethodID(cls, "isBannerLoaded", "()Z");
+        g_app.m_UpdateBannerLayout= env->GetMethodID(cls, "updateBannerLayout", "()V");
     }
 
     void Initialize_Ext()
@@ -125,6 +127,7 @@ namespace dmYandexAds
 
     void ActivateApp()
     {
+        CallVoidMethod(g_app.m_AppJNI, g_app.m_UpdateBannerLayout);
     }
 
     void Initialize()

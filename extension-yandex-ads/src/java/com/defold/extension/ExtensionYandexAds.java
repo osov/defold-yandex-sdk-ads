@@ -59,14 +59,13 @@ public class ExtensionYandexAds {
   private static final int EVENT_IMPRESSION = 5;
   private static final int EVENT_NOT_LOADED = 6;
   private static final int EVENT_REWARDED = 7;
+  private static final int EVENT_DESTROYED = 8;
 
   private static final int BANNER_320_50 = 0;
 
   private Activity activity;
   private InterstitialAd mInterstitialAd;
   private RewardedAd mRewardedAd;
-  private BannerAdView mBannerAdView;
-  private RelativeLayout mBannerLayout;
 
   public ExtensionYandexAds(Activity mainActivity) {
     activity = mainActivity;
@@ -259,6 +258,10 @@ public class ExtensionYandexAds {
   }
 
   // ------------------------------------------------------------------------------------------
+  private LinearLayout layout;
+  private BannerAdView mBannerAdView;
+  private WindowManager windowManager;
+  private boolean isBannerShown = false;
 
   public void loadBanner(final String unitId, int bannerSize) {
     int w = 320;
@@ -266,26 +269,31 @@ public class ExtensionYandexAds {
     // todo add other...
     if (bannerSize == BANNER_320_50) {
     }
-    destroyBanner();
+   
     activity.runOnUiThread(new Runnable() {
       @Override
       public void run() {
         Log.d(TAG, "loadBanner");
-        mBannerAdView = new BannerAdView(activity);
-        mBannerAdView.setAdUnitId(unitId);
-        mBannerAdView.setAdSize(AdSize.flexibleSize(w, h));
-        final BannerAdView view = mBannerAdView;
+        if (isBannerLoaded()) {
+          _destroyBanner()
+        }
+
+        final BannerAdView view = new BannerAdView(activity);
+        view.setAdUnitId(unitId);
+        view.setAdSize(AdSize.flexibleSize(w, h));
+        view.pause();
+
         AdRequest adRequest = new AdRequest.Builder().build();
-        mBannerAdView.setBannerAdEventListener(new BannerAdEventListener() {
+        view.setBannerAdEventListener(new BannerAdEventListener() {
           @Override
           public void onAdLoaded() {
             Log.d(TAG, "banner:onAdLoaded");
-            if (view != mBannerAdView) {
-              Log.w(TAG, "Prevent reporting onAdLoaded for obsolete BannerAd (loadBanner was called multiple times)");
-              view.destroy();
-              return;
+            if (!isBannerLoaded()) {
+              mBannerAdView = view;
+              createLayout();
             }
-            //showBanner();
+
+            // showBanner();
             sendSimpleMessage(MSG_BANNER, EVENT_LOADED);
           }
 
@@ -316,71 +324,111 @@ public class ExtensionYandexAds {
           }
 
         });
-
         // Загрузка объявления.
-        mBannerAdView.loadAd(adRequest);
+        view.loadAd(adRequest);
       }
     });
   }
 
-  public boolean isBannerLoaded() {
-    // todo проверка на реальность загружен ли он по факту
-    return mBannerAdView != null;
-  }
-
-  public void destroyBanner() {
+  private void _destroyBanner() {
+    Log.d(TAG, "destroyBanner");
     if (!isBannerLoaded()) {
       return;
     }
+    if (isBannerShown) {
+      windowManager.removeView(layout);
+    }
+    mBannerAdView.destroy();
+    layout = null;
+    mBannerAdView = null;
+    isBannerShown = false;
+    sendSimpleMessage(MSG_BANNER, EVENT_DESTROYED);
+  }
+
+  public void destroyBanner() {
     activity.runOnUiThread(new Runnable() {
       @Override
       public void run() {
-        Log.d(TAG, "destroyBanner");
-        mBannerAdView.destroy();
-        mBannerAdView = null;
-        removeBannerLayout();
+        _destroyBanner();
       }
     });
   }
 
   public void showBanner() {
-    if (!isBannerLoaded()) {
-      return;
-    }
     activity.runOnUiThread(new Runnable() {
       @Override
       public void run() {
         Log.d(TAG, "showBanner");
-        recreateBannerLayout();
-        mBannerLayout.setVisibility(View.VISIBLE);
-        mBannerAdView.setBackgroundColor(Color.TRANSPARENT);
+        if (!isBannerLoaded()) {
+          return;
+        }
+        layout.setSystemUiVisibility(activity.getWindow().getDecorView().getSystemUiVisibility());
+
+        if (!layout.isShown()) {
+          // m_bannerPosition = gravity;
+          windowManager.addView(layout, getParameters());
+          mBannerAdView.resume();
+          isBannerShown = true;
+        }
       }
     });
   }
 
   public void hideBanner() {
-    if (!isBannerLoaded()) {
-      return;
-    }
     activity.runOnUiThread(new Runnable() {
       @Override
       public void run() {
         Log.d(TAG, "hideBanner");
-        if (mBannerLayout != null)
-          mBannerLayout.setVisibility(View.INVISIBLE);
+        if (!isBannerLoaded() || !isBannerShown) {
+          return;
+        }
+        isBannerShown = false;
+        windowManager.removeView(layout);
+        mBannerAdView.pause();
       }
     });
   }
 
-  private void removeBannerLayout() {
-    if (mBannerLayout != null) {
-      mBannerLayout.removeAllViews();
-      activity.getWindowManager().removeView(mBannerLayout);
-      mBannerLayout = null;
-    }
+  public boolean isBannerLoaded() {
+    return mBannerAdView != null;
   }
 
-  private WindowManager.LayoutParams getWindowLayoutParams() {
+  public void updateBannerLayout() {
+    activity.runOnUiThread(new Runnable() {
+      @Override
+      public void run() {
+        if (!isBannerLoaded()) {
+          return;
+        }
+        layout.setSystemUiVisibility(activity.getWindow().getDecorView().getSystemUiVisibility());
+        if (!isBannerShown) {
+          return;
+        }
+        windowManager.removeView(layout);
+        if (isBannerShown) {
+          windowManager.updateViewLayout(layout, getParameters());
+          if (!layout.isShown()) {
+            windowManager.addView(layout, getParameters());
+          }
+        }
+      }
+    });
+  }
+
+  private void createLayout() {
+    windowManager = activity.getWindowManager();
+    layout = new LinearLayout(activity);
+    layout.setOrientation(LinearLayout.VERTICAL);
+
+    MarginLayoutParams params = new MarginLayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+        LinearLayout.LayoutParams.MATCH_PARENT);
+    params.setMargins(0, 0, 0, 0);
+    layout.setSystemUiVisibility(activity.getWindow().getDecorView().getSystemUiVisibility());
+
+    layout.addView(mBannerAdView, params);
+  }
+
+  private WindowManager.LayoutParams getParameters() {
     WindowManager.LayoutParams windowParams = new WindowManager.LayoutParams();
     windowParams.x = WindowManager.LayoutParams.WRAP_CONTENT;
     windowParams.y = WindowManager.LayoutParams.WRAP_CONTENT;
@@ -390,22 +438,6 @@ public class ExtensionYandexAds {
         | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
     windowParams.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
     return windowParams;
-  }
-
-  private void recreateBannerLayout() {
-    removeBannerLayout();
-    mBannerLayout = new RelativeLayout(activity);
-    mBannerLayout.setVisibility(View.GONE);
-    mBannerLayout.setSystemUiVisibility(
-        View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-            | View.SYSTEM_UI_FLAG_FULLSCREEN
-            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-    RelativeLayout.LayoutParams adParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
-        RelativeLayout.LayoutParams.WRAP_CONTENT);
-    adParams.setMargins(0, 0, 0, 0);
-    mBannerLayout.addView(mBannerAdView, adParams);
-    activity.getWindowManager().addView(mBannerLayout, getWindowLayoutParams());
   }
 
   // ------------------------------------------------------------------------------------------
