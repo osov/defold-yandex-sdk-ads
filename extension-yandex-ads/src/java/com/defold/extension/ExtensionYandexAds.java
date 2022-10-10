@@ -281,7 +281,7 @@ public class ExtensionYandexAds {
         final BannerAdView view = new BannerAdView(activity);
         view.setAdUnitId(unitId);
         view.setAdSize(AdSize.flexibleSize(w, h));
-        view.pause();
+        view.setVisibility(View.INVISIBLE); //view.pause();
 
         AdRequest adRequest = new AdRequest.Builder().build();
         view.setBannerAdEventListener(new BannerAdEventListener() {
@@ -367,7 +367,8 @@ public class ExtensionYandexAds {
         if (!layout.isShown()) {
           // m_bannerPosition = gravity;
           windowManager.addView(layout, getParameters());
-          mBannerAdView.resume();
+          //mBannerAdView.resume();
+          mBannerAdView.setVisibility(View.VISIBLE);
           isBannerShown = true;
         }
       }
@@ -384,7 +385,7 @@ public class ExtensionYandexAds {
         }
         isBannerShown = false;
         windowManager.removeView(layout);
-        mBannerAdView.pause();
+        mBannerAdView.setVisibility(View.INVISIBLE); //mBannerAdView.pause();
       }
     });
   }
