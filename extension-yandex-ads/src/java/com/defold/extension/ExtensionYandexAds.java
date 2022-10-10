@@ -275,7 +275,7 @@ public class ExtensionYandexAds {
       public void run() {
         Log.d(TAG, "loadBanner");
         if (isBannerLoaded()) {
-          _destroyBanner()
+          _destroyBanner();
         }
 
         final BannerAdView view = new BannerAdView(activity);
