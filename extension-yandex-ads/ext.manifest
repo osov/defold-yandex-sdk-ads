@@ -3,4 +3,4 @@ name: "YandexSdkAds"
 platforms:
     android:
         context:
-            aaptExtraPackages: ['com.yandex.android.mobileads', 'com.yandex.mobile.ads', 'com.yandex.mobile', 'com.yandex.mobile.ads.imp', 'androidx.appcompat']
+            aaptExtraPackages: ['com.yandex.android.mobileads', 'com.yandex.mobile.ads', 'com.yandex.mobile', 'com.yandex.mobile.ads.imp', 'androidx.appcompat', 'androidx.core']
