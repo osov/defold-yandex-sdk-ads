@@ -336,7 +336,7 @@ public class ExtensionYandexAds {
       return;
     }
     if (isBannerShown && layout != null) {
-      windowManager.removeView(layout);
+      windowManager.removeView(layout); // <-- check is error
     }
     mBannerAdView.destroy();
     layout = null;
@@ -405,7 +405,7 @@ public class ExtensionYandexAds {
         if (!isBannerShown) {
           return;
         }
-        windowManager.removeView(layout);
+        windowManager.removeView(layout); // <-- this error require fix
         if (isBannerShown) {
           windowManager.updateViewLayout(layout, getParameters());
           if (!layout.isShown()) {
