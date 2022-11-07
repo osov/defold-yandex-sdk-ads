@@ -335,14 +335,14 @@ public class ExtensionYandexAds {
     if (!isBannerLoaded()) {
       return;
     }
-    if (isBannerShown) {
+    if (isBannerShown && layout != null) {
       windowManager.removeView(layout);
     }
     mBannerAdView.destroy();
     layout = null;
     mBannerAdView = null;
     isBannerShown = false;
-    sendSimpleMessage(MSG_BANNER, EVENT_DESTROYED);
+    //sendSimpleMessage(MSG_BANNER, EVENT_DESTROYED);
   }
 
   public void destroyBanner() {
