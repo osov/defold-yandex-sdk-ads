@@ -292,8 +292,6 @@ public class ExtensionYandexAds {
               mBannerAdView = view;
               createLayout();
             }
-
-            // showBanner();
             sendSimpleMessage(MSG_BANNER, EVENT_LOADED);
           }
 
@@ -322,7 +320,6 @@ public class ExtensionYandexAds {
           @Override
           public void onReturnedToApplication() {
           }
-
         });
         // Загрузка объявления.
         view.loadAd(adRequest);
@@ -335,14 +332,19 @@ public class ExtensionYandexAds {
     if (!isBannerLoaded()) {
       return;
     }
-    if (isBannerShown && layout != null) {
-      windowManager.removeView(layout); // <-- check is error
+    if (isBannerShown && windowManager != null && layout != null) {
+    	try {
+	      	windowManager.removeView(layout);
+	      }
+	      catch(Exception e){
+	      	Log.e(TAG, "_destroyBanner: "+e);
+	      }
     }
     mBannerAdView.destroy();
     layout = null;
     mBannerAdView = null;
     isBannerShown = false;
-    //sendSimpleMessage(MSG_BANNER, EVENT_DESTROYED);
+    sendSimpleMessage(MSG_BANNER, EVENT_DESTROYED);
   }
 
   public void destroyBanner() {
@@ -363,12 +365,15 @@ public class ExtensionYandexAds {
           return;
         }
         layout.setSystemUiVisibility(activity.getWindow().getDecorView().getSystemUiVisibility());
-
+        if (/*m_bannerPosition != gravity &&*/ isBannerShown){
+            //m_bannerPosition = gravity;
+            windowManager.updateViewLayout(layout, getParameters());
+            return;
+        }
         if (!layout.isShown()) {
           // m_bannerPosition = gravity;
           windowManager.addView(layout, getParameters());
-          //mBannerAdView.resume();
-          mBannerAdView.setVisibility(View.VISIBLE);
+          mBannerAdView.setVisibility(View.VISIBLE);  //mBannerAdView.resume();
           isBannerShown = true;
         }
       }
@@ -384,7 +389,14 @@ public class ExtensionYandexAds {
           return;
         }
         isBannerShown = false;
-        windowManager.removeView(layout);
+        if (windowManager != null && layout != null) {
+			try {
+		      	windowManager.removeView(layout);
+		      }
+		      catch(Exception e){
+		      	Log.e(TAG, "hideBanner: "+e);
+		      }
+		}
         mBannerAdView.setVisibility(View.INVISIBLE); //mBannerAdView.pause();
       }
     });
@@ -405,7 +417,15 @@ public class ExtensionYandexAds {
         if (!isBannerShown) {
           return;
         }
-        windowManager.removeView(layout); // <-- this error require fix
+        if (windowManager != null && layout != null) {
+			try {
+		      	windowManager.removeView(layout);
+		      }
+		      catch(Exception e){
+		      	Log.e(TAG, "updateBannerLayout: "+e);
+		      }
+		}
+
         if (isBannerShown) {
           windowManager.updateViewLayout(layout, getParameters());
           if (!layout.isShown()) {
