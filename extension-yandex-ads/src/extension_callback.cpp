@@ -23,7 +23,7 @@ static void InvokeCallback(MessageId type, const char*json)
 {
     if (!dmScript::IsCallbackValid(m_luaCallback))
     {
-        dmLogError("App callback is invalid. Set new callback unsing `extension.setCallback()` funciton.");
+        dmLogError("ExtensionYandexAds callback is invalid. Set new callback unsing `yandexads.setCallback()` function.");
         return;
     }
 
@@ -36,30 +36,7 @@ static void InvokeCallback(MessageId type, const char*json)
     }
 
     lua_pushnumber(L, type);
-    bool is_fail = false;
-    dmJson::Document doc;
-    dmJson::Result r = dmJson::Parse(json, &doc);
-    if (r == dmJson::RESULT_OK && doc.m_NodeCount > 0)
-    {
-        char error_str_out[128];
-        if (dmScript::JsonToLua(L, &doc, 0, error_str_out, sizeof(error_str_out)) < 0)
-        {
-            dmLogError("Failed converting object JSON to Lua; %s", error_str_out);
-            is_fail = true;
-        }
-    } 
-    else
-    {
-        dmLogError("Failed to parse JSON object(%d): (%s)", r, json);
-        is_fail = true;
-    }
-    dmJson::Free(&doc);
-    if (is_fail)
-    {
-        lua_pop(L, 2);
-        assert(top == lua_gettop(L));
-        return;
-    }
+    dmScript::JsonToLua(L, json, strlen(json)); // throws lua error if it fails
 
     int number_of_arguments = 3;
 

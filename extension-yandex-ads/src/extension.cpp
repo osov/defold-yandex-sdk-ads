@@ -37,7 +37,7 @@ namespace dmYandexAds
         {
             char msg[256];
             snprintf(msg, sizeof(msg), "Expected string, got %s. Wrong type for Interstitial UnitId variable '%s'.", luaL_typename(L, 1), lua_tostring(L, 1));
-            luaL_error(L, msg);
+            luaL_error(L, "%s", msg);
             return 0;
         }
         const char *unitId_lua = luaL_checkstring(L, 1);
@@ -69,7 +69,7 @@ namespace dmYandexAds
         {
             char msg[256];
             snprintf(msg, sizeof(msg), "Expected string, got %s. Wrong type for Interstitial UnitId variable '%s'.", luaL_typename(L, 1), lua_tostring(L, 1));
-            luaL_error(L, msg);
+            luaL_error(L, "%s", msg);
             return 0;
         }
         const char *unitId_lua = luaL_checkstring(L, 1);
@@ -101,7 +101,7 @@ namespace dmYandexAds
         {
             char msg[256];
             snprintf(msg, sizeof(msg), "Expected string, got %s. Wrong type for Interstitial UnitId variable '%s'.", luaL_typename(L, 1), lua_tostring(L, 1));
-            luaL_error(L, msg);
+            luaL_error(L, "%s", msg);
             return 0;
         }
         const char *unitId_lua = luaL_checkstring(L, 1);
@@ -244,7 +244,7 @@ DM_DECLARE_EXTENSION(EXTENSION_NAME, LIB_NAME, dmYandexAds::AppInitializeApp, dm
 
 static dmExtension::Result InitializeApp(dmExtension::Params *params)
 {
-    dmLogInfo("Registered extension App (null)");
+    dmLogInfo("Registered extension YandexAds (null)");
     return dmExtension::RESULT_OK;
 }
 

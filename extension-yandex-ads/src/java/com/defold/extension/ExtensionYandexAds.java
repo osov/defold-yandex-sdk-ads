@@ -367,7 +367,11 @@ public class ExtensionYandexAds {
         layout.setSystemUiVisibility(activity.getWindow().getDecorView().getSystemUiVisibility());
         if (/*m_bannerPosition != gravity &&*/ isBannerShown){
             //m_bannerPosition = gravity;
-            windowManager.updateViewLayout(layout, getParameters());
+           try {
+				windowManager.updateViewLayout(layout, getParameters());
+			} catch (Exception e) {
+				Log.e(TAG, "showBanner: " + e);
+			}
             return;
         }
         if (!layout.isShown()) {
@@ -413,25 +417,25 @@ public class ExtensionYandexAds {
         if (!isBannerLoaded()) {
           return;
         }
-        layout.setSystemUiVisibility(activity.getWindow().getDecorView().getSystemUiVisibility());
-        if (!isBannerShown) {
-          return;
-        }
         if (windowManager != null && layout != null) {
 			try {
-		      	windowManager.removeView(layout);
-		      }
-		      catch(Exception e){
-		      	Log.e(TAG, "updateBannerLayout: "+e);
-		      }
-		}
+				layout.setSystemUiVisibility(activity.getWindow().getDecorView().getSystemUiVisibility());
+				if (!isBannerShown) {
+				  return;
+				}
 
-        if (isBannerShown) {
-          windowManager.updateViewLayout(layout, getParameters());
-          if (!layout.isShown()) {
-            windowManager.addView(layout, getParameters());
-          }
-        }
+				windowManager.removeView(layout);
+				if (isBannerShown) {
+					windowManager.updateViewLayout(layout, getParameters());
+					if (!layout.isShown()) {
+						windowManager.addView(layout, getParameters());
+					}
+				}
+			}
+			catch(Exception e){
+				Log.e(TAG, "updateBannerLayout: "+e);
+			}
+		}
       }
     });
   }
