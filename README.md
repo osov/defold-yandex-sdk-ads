@@ -59,7 +59,7 @@ Please, read [Android API docs](https://yandex.ru/dev/mobile-ads/doc/android/qui
 1) set up an event handling callback
 2) run initialization
 3) load desired ad format
-```
+```lua
 local function listener(self, message_id, message)
     if message_id == yandexads.MSG_ADS_INITED then
     -- extension is ready to load ads
@@ -73,7 +73,7 @@ yandexads.initialize() -- (2)
 
 ## BANNER
 
-```
+```lua
 local function listener(self, message_id, message)
     if message_id == yandexads.MSG_ADS_INITED then
        yandexads.load_banner('R-M-DEMO-300x250')
@@ -94,7 +94,7 @@ Fixed parameters are set:
 
 ## INTERSTITIAL
 
-```
+```lua
 local function listener(self, message_id, message)
     if message_id == yandexads.MSG_ADS_INITED then
        yandexads.load_interstitial('R-M-DEMO-interstitial')
@@ -111,7 +111,7 @@ end
 
 ## REWARDED
 
-```
+```lua
 local function listener(self, message_id, message)
     if message_id == yandexads.MSG_ADS_INITED then
        yandexads.load_rewarded('R-M-DEMO-rewarded-client-side-rtb')
