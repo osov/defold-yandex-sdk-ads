@@ -53,6 +53,15 @@ Please, read [Android API docs](https://yandex.ru/dev/mobile-ads/doc/android/qui
 	yandexads.EVENT_NOT_LOADED
 	yandexads.EVENT_REWARDED
 	yandexads.EVENT_DESTROYED
+	
+	yandexads.POS_NONE
+	yandexads.POS_TOP_LEFT
+	yandexads.POS_TOP_CENTER
+	yandexads.POS_TOP_RIGHT
+	yandexads.POS_BOTTOM_LEFT
+	yandexads.POS_BOTTOM_CENTER
+	yandexads.POS_BOTTOM_RIGHT
+	yandexads.POS_CENTER
 
 # How to use ?
 
@@ -81,14 +90,13 @@ local function listener(self, message_id, message)
 
     if message_id == yandexads.MSG_BANNER then
        if event == yandexads.EVENT_LOADED then
-          yandexads.show_banner()
+          yandexads.show_banner(yandexads.BOTTOM_CENTER) -- optional position(default BOTTOM_CENTER)
        end
     end
 end
 ```
 
 Fixed parameters are set:
-   position - bottom;
    size - AdSize.flexibleSize(320,50)
 
 
