@@ -106,7 +106,7 @@ namespace dmYandexAds
 
         g_app.m_LoadBanner = env->GetMethodID(cls, "loadBanner", "(Ljava/lang/String;I)V");
         g_app.m_DestroyBanner = env->GetMethodID(cls, "destroyBanner", "()V");
-        g_app.m_ShowBanner = env->GetMethodID(cls, "showBanner", "()V");
+        g_app.m_ShowBanner = env->GetMethodID(cls, "showBanner", "(I)V");
         g_app.m_HideBanner = env->GetMethodID(cls, "hideBanner", "()V");
         g_app.m_IsBannerLoaded = env->GetMethodID(cls, "isBannerLoaded", "()Z");
         g_app.m_UpdateBannerLayout= env->GetMethodID(cls, "updateBannerLayout", "()V");
@@ -181,9 +181,9 @@ namespace dmYandexAds
         CallVoidMethod(g_app.m_AppJNI, g_app.m_DestroyBanner);
     }
 
-    void ShowBanner()
+    void ShowBanner(BannerPosition bannerPos)
     {
-        CallVoidMethod(g_app.m_AppJNI, g_app.m_ShowBanner);
+        CallVoidMethodInt(g_app.m_AppJNI, g_app.m_ShowBanner, (int)bannerPos);
     }
 
     void HideBanner()

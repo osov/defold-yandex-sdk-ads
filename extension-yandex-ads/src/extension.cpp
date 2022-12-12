@@ -132,7 +132,11 @@ namespace dmYandexAds
     static int Lua_ShowBanner(lua_State *L)
     {
         DM_LUA_STACK_CHECK(L, 0);
-        ShowBanner();
+        BannerPosition bannerPos_lua = POS_BOTTOM_CENTER;
+	    if (lua_type(L, 1) != LUA_TNONE) {
+	        bannerPos_lua = (BannerPosition)luaL_checknumber(L, 1);
+	    }
+	    ShowBanner(bannerPos_lua);
         return 0;
     }
 
@@ -189,6 +193,15 @@ namespace dmYandexAds
         SETCONSTANT(EVENT_NOT_LOADED)
         SETCONSTANT(EVENT_REWARDED)
         SETCONSTANT(EVENT_DESTROYED)
+
+        SETCONSTANT(POS_NONE)
+	    SETCONSTANT(POS_TOP_LEFT)
+	    SETCONSTANT(POS_TOP_CENTER)
+	    SETCONSTANT(POS_TOP_RIGHT)
+	    SETCONSTANT(POS_BOTTOM_LEFT)
+	    SETCONSTANT(POS_BOTTOM_CENTER)
+	    SETCONSTANT(POS_BOTTOM_RIGHT)
+	    SETCONSTANT(POS_CENTER)
 
         SETCONSTANT(BANNER_320_50)
 

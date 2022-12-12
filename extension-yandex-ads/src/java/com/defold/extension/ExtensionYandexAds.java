@@ -61,6 +61,15 @@ public class ExtensionYandexAds {
 	private static final int EVENT_REWARDED = 7;
 	private static final int EVENT_DESTROYED = 8;
 
+	private static final int POS_NONE =                 0;
+	private static final int POS_TOP_LEFT =             1;
+	private static final int POS_TOP_CENTER =           2;
+	private static final int POS_TOP_RIGHT =            3;
+	private static final int POS_BOTTOM_LEFT =          4;
+	private static final int POS_BOTTOM_CENTER =        5;
+	private static final int POS_BOTTOM_RIGHT =         6;
+	private static final int POS_CENTER =               7;
+
 	private static final int BANNER_320_50 = 0;
 
 	private Activity activity;
@@ -258,6 +267,7 @@ public class ExtensionYandexAds {
 	private BannerAdView mBannerAdView;
 	private WindowManager windowManager;
 	private boolean isBannerShown = false;
+	private int m_bannerPosition = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
 
 	public void loadBanner(final String unitId, int bannerSize) {
 		int w = 320;
@@ -352,7 +362,35 @@ public class ExtensionYandexAds {
 		});
 	}
 
-	public void showBanner() {
+	private int getGravity(int bannerPosConst) {
+		int bannerPos = Gravity.NO_GRAVITY;
+		switch (bannerPosConst) {
+		case POS_TOP_LEFT:
+			bannerPos = Gravity.TOP | Gravity.LEFT;
+			break;
+		case POS_TOP_CENTER:
+			bannerPos = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
+			break;
+		case POS_TOP_RIGHT:
+			bannerPos = Gravity.TOP | Gravity.RIGHT;
+			break;
+		case POS_BOTTOM_LEFT:
+			bannerPos = Gravity.BOTTOM | Gravity.LEFT;
+			break;
+		case POS_BOTTOM_CENTER:
+			bannerPos = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
+			break;
+		case POS_BOTTOM_RIGHT:
+			bannerPos = Gravity.BOTTOM | Gravity.RIGHT;
+			break;
+		case POS_CENTER:
+			bannerPos = Gravity.CENTER;
+			break;
+		}
+		return bannerPos;
+	}
+
+	public void showBanner(final int pos) {
 		activity.runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
@@ -361,9 +399,10 @@ public class ExtensionYandexAds {
 					return;
 				}
 				layout.setSystemUiVisibility(activity.getWindow().getDecorView().getSystemUiVisibility());
-				if ( /*m_bannerPosition != gravity &&*/ isBannerShown) {
-					//m_bannerPosition = gravity;
+				int gravity = getGravity(pos);
+				if ( m_bannerPosition != gravity && isBannerShown) {
 					try {
+						m_bannerPosition = gravity;
 						windowManager.updateViewLayout(layout, getParameters());
 					} catch (Exception e) {
 						Log.e(TAG, "showBanner: " + e);
@@ -371,7 +410,7 @@ public class ExtensionYandexAds {
 					return;
 				}
 				if (!layout.isShown()) {
-					// m_bannerPosition = gravity;
+					m_bannerPosition = gravity;
 					windowManager.addView(layout, getParameters());
 					mBannerAdView.setVisibility(View.VISIBLE); //mBannerAdView.resume();
 					isBannerShown = true;
@@ -457,7 +496,7 @@ public class ExtensionYandexAds {
 		windowParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
 		windowParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL |
 		WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
-		windowParams.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
+		windowParams.gravity = m_bannerPosition;
 		return windowParams;
 	}
 

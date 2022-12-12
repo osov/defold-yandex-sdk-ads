@@ -10,6 +10,18 @@ namespace dmYandexAds
         BANNER_320_50 = 0
     };
 
+    enum BannerPosition
+    {
+        POS_NONE =              0,
+        POS_TOP_LEFT =          1,
+        POS_TOP_CENTER =        2,
+        POS_TOP_RIGHT =         3,
+        POS_BOTTOM_LEFT =       4,
+        POS_BOTTOM_CENTER =     5,
+        POS_BOTTOM_RIGHT =      6,
+        POS_CENTER =            7
+    };
+
     void Initialize_Ext();
     void ActivateApp();
 
@@ -26,7 +38,7 @@ namespace dmYandexAds
     void LoadBanner(const char *unitId, BannerSize bannerSize);
     bool IsBannerLoaded();
     void DestroyBanner();
-    void ShowBanner();
+    void ShowBanner(BannerPosition bannerPos);
     void HideBanner();
 
 }
