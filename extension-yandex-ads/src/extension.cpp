@@ -35,12 +35,9 @@ namespace dmYandexAds
         DM_LUA_STACK_CHECK(L, 0);
         if (lua_type(L, 1) != LUA_TSTRING)
         {
-            char msg[256];
-            snprintf(msg, sizeof(msg), "Expected string, got %s. Wrong type for Interstitial UnitId variable '%s'.", luaL_typename(L, 1), lua_tostring(L, 1));
-            luaL_error(L, "%s", msg);
-            return 0;
+            return DM_LUA_ERROR("Expected string, got %s. Wrong type for Interstitial UnitId variable '%s'.", luaL_typename(L, 1), lua_tostring(L, 1));
         }
-        const char *unitId_lua = luaL_checkstring(L, 1);
+        const char* unitId_lua = luaL_checkstring(L, 1);
         LoadInterstitial(unitId_lua);
         return 0;
     }
@@ -67,12 +64,9 @@ namespace dmYandexAds
         DM_LUA_STACK_CHECK(L, 0);
         if (lua_type(L, 1) != LUA_TSTRING)
         {
-            char msg[256];
-            snprintf(msg, sizeof(msg), "Expected string, got %s. Wrong type for Interstitial UnitId variable '%s'.", luaL_typename(L, 1), lua_tostring(L, 1));
-            luaL_error(L, "%s", msg);
-            return 0;
+            return DM_LUA_ERROR("Expected string, got %s. Wrong type for Rewarded UnitId variable '%s'.", luaL_typename(L, 1), lua_tostring(L, 1));
         }
-        const char *unitId_lua = luaL_checkstring(L, 1);
+        const char* unitId_lua = luaL_checkstring(L, 1);
         LoadRewarded(unitId_lua);
         return 0;
     }
@@ -99,12 +93,9 @@ namespace dmYandexAds
         DM_LUA_STACK_CHECK(L, 0);
         if (lua_type(L, 1) != LUA_TSTRING)
         {
-            char msg[256];
-            snprintf(msg, sizeof(msg), "Expected string, got %s. Wrong type for Interstitial UnitId variable '%s'.", luaL_typename(L, 1), lua_tostring(L, 1));
-            luaL_error(L, "%s", msg);
-            return 0;
+            return DM_LUA_ERROR("Expected string, got %s. Wrong type for Banner UnitId variable '%s'.", luaL_typename(L, 1), lua_tostring(L, 1));
         }
-        const char *unitId_lua = luaL_checkstring(L, 1);
+        const char* unitId_lua = luaL_checkstring(L, 1);
         BannerSize bannerSize_lua = BANNER_320_50;
         if (lua_type(L, 2) != LUA_TNONE)
         {
