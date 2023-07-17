@@ -5,6 +5,10 @@ android {
     }
 }
 
+ repositories {
+	mavenCentral()
+}
+
 dependencies {
      implementation 'com.yandex.android:mobileads:5.7.0'
 }
