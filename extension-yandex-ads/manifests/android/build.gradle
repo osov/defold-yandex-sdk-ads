@@ -6,7 +6,7 @@ android {
 }
 
 repositories {
-	mavenCentral()
+	//mavenCentral()
 }
 
 dependencies {
