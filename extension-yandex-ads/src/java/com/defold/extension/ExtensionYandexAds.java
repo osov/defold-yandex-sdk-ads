@@ -190,8 +190,13 @@ public class ExtensionYandexAds {
 				mRewardedAd.setRewardedAdEventListener(new RewardedAdEventListener() {
 					@Override
 					public void onRewarded(final Reward reward) {
+						int amount = reward.getAmount();
+    				String type = reward.getType();
+
 						Log.d(TAG, "rewarded:onRewarded");
-						sendSimpleMessage(MSG_REWARDED, EVENT_REWARDED);
+						Log.d(TAG, "Amount: " + amount + ", Type: " + type);
+
+						sendMessage(MSG_REWARDED, EVENT_REWARDED, "amount", String.valueOf(amount), "type", type);
 					}
 
 					@Override
@@ -539,4 +544,18 @@ public class ExtensionYandexAds {
 		AddToQueue(msg, message);
 	}
 
+	private void sendMessage(int msg, int eventId, String... keyValuePairs) {
+		String message = null;
+		try {
+			JSONObject obj = new JSONObject();
+			obj.put("event", eventId);
+			for (int i = 0; i < keyValuePairs.length; i += 2) {
+				obj.put(keyValuePairs[i], keyValuePairs[i + 1]);
+			}
+			message = obj.toString();
+		} catch (JSONException e) {
+			message = getJsonConversionErrorMessage(e.getLocalizedMessage());
+		}
+		AddToQueue(msg, message);
+	}
 }
