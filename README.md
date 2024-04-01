@@ -89,7 +89,7 @@ local function listener(self, message_id, message)
     end
 
     if message_id == yandexads.MSG_BANNER then
-       if event == yandexads.EVENT_LOADED then
+       if message.event == yandexads.EVENT_LOADED then
           yandexads.show_banner(yandexads.BOTTOM_CENTER) -- optional position(default BOTTOM_CENTER)
        end
     end
