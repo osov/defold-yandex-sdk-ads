@@ -109,7 +109,7 @@ local function listener(self, message_id, message)
     end
 
     if message_id == yandexads.MSG_INTERSTITIAL then
-       if event == yandexads.EVENT_LOADED then
+       if message.event == yandexads.EVENT_LOADED then
           yandexads.show_interstitial()
        end
     end
@@ -126,7 +126,7 @@ local function listener(self, message_id, message)
     end
 
     if message_id == yandexads.MSG_REWARDED then
-       if event == yandexads.EVENT_LOADED then
+       if message.event == yandexads.EVENT_LOADED then
           yandexads.show_rewarded()
        end
     end
