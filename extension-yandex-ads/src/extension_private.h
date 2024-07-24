@@ -35,7 +35,7 @@ namespace dmYandexAds
     bool IsRewardedLoaded();
     void ShowRewarded();
 
-    void LoadBanner(const char *unitId, BannerSize bannerSize);
+    void LoadBanner(const char *unitId, int width, int height);
     bool IsBannerLoaded();
     void DestroyBanner();
     void ShowBanner(BannerPosition bannerPos);

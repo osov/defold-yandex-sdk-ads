@@ -14,13 +14,6 @@
 namespace dmYandexAds
 {
 
-    static int Lua_Initialize(lua_State *L)
-    {
-        DM_LUA_STACK_CHECK(L, 0);
-        Initialize();
-        return 0;
-    }
-
     static int Lua_SetCallback(lua_State *L)
     {
         DM_LUA_STACK_CHECK(L, 0);
@@ -28,115 +21,111 @@ namespace dmYandexAds
         return 0;
     }
 
-    // ------------------------------------------------------------------------------------------
-
-    static int Lua_LoadInterstitial(lua_State *L)
+    static int Lua_Initialize(lua_State *L)
     {
         DM_LUA_STACK_CHECK(L, 0);
-        if (lua_type(L, 1) != LUA_TSTRING)
-        {
-            return DM_LUA_ERROR("Expected string, got %s. Wrong type for Interstitial UnitId variable '%s'.", luaL_typename(L, 1), lua_tostring(L, 1));
-        }
-        const char* unitId_lua = luaL_checkstring(L, 1);
-        LoadInterstitial(unitId_lua);
-        return 0;
-    }
-
-    static int Lua_IsInterstitialLoaded(lua_State *L)
-    {
-        DM_LUA_STACK_CHECK(L, 1);
-        bool is_loaded = IsInterstitialLoaded();
-        lua_pushboolean(L, is_loaded);
-        return 1;
-    }
-
-    static int Lua_ShowInterstitial(lua_State *L)
-    {
-        DM_LUA_STACK_CHECK(L, 0);
-        ShowInterstitial();
+        Initialize();
         return 0;
     }
 
     // ------------------------------------------------------------------------------------------
 
-    static int Lua_LoadRewarded(lua_State *L)
-    {
-        DM_LUA_STACK_CHECK(L, 0);
-        if (lua_type(L, 1) != LUA_TSTRING)
-        {
-            return DM_LUA_ERROR("Expected string, got %s. Wrong type for Rewarded UnitId variable '%s'.", luaL_typename(L, 1), lua_tostring(L, 1));
-        }
-        const char* unitId_lua = luaL_checkstring(L, 1);
-        LoadRewarded(unitId_lua);
-        return 0;
-    }
+    static int Lua_LoadInterstitial(lua_State *L) {
+		DM_LUA_STACK_CHECK(L, 0);
+		if (lua_type(L, 1) != LUA_TSTRING) {
+			return DM_LUA_ERROR("Expected string, got %s. Wrong type for Interstitial UnitId variable '%s'.", luaL_typename(L, 1), lua_tostring(L, 1));
+		}
+		const char *unitId_lua = luaL_checkstring(L, 1);
+		LoadInterstitial(unitId_lua);
+		return 0;
+	}
 
-    static int Lua_IsRewardedLoaded(lua_State *L)
-    {
-        DM_LUA_STACK_CHECK(L, 1);
-        bool is_loaded = IsRewardedLoaded();
-        lua_pushboolean(L, is_loaded);
-        return 1;
-    }
+	static int Lua_IsInterstitialLoaded(lua_State *L) {
+		DM_LUA_STACK_CHECK(L, 1);
+		bool is_loaded = IsInterstitialLoaded();
+		lua_pushboolean(L, is_loaded);
+		return 1;
+	}
 
-    static int Lua_ShowRewarded(lua_State *L)
-    {
-        DM_LUA_STACK_CHECK(L, 0);
-        ShowRewarded();
-        return 0;
-    }
+	static int Lua_ShowInterstitial(lua_State *L) {
+		DM_LUA_STACK_CHECK(L, 0);
+		ShowInterstitial();
+		return 0;
+	}
 
     // ------------------------------------------------------------------------------------------
 
-    static int Lua_LoadBanner(lua_State *L)
-    {
-        DM_LUA_STACK_CHECK(L, 0);
-        if (lua_type(L, 1) != LUA_TSTRING)
-        {
-            return DM_LUA_ERROR("Expected string, got %s. Wrong type for Banner UnitId variable '%s'.", luaL_typename(L, 1), lua_tostring(L, 1));
-        }
-        const char* unitId_lua = luaL_checkstring(L, 1);
-        BannerSize bannerSize_lua = BANNER_320_50;
-        if (lua_type(L, 2) != LUA_TNONE)
-        {
-            bannerSize_lua = (BannerSize)luaL_checknumber(L, 2);
-        }
-        LoadBanner(unitId_lua, bannerSize_lua);
-        return 0;
-    }
+    static int Lua_LoadRewarded(lua_State *L) {
+		DM_LUA_STACK_CHECK(L, 0);
+		if (lua_type(L, 1) != LUA_TSTRING) {
+			return DM_LUA_ERROR("Expected string, got %s. Wrong type for Rewarded UnitId variable '%s'.", luaL_typename(L, 1), lua_tostring(L, 1));
+		}
+		const char *unitId_lua = luaL_checkstring(L, 1);
+		LoadRewarded(unitId_lua);
+		return 0;
+	}
 
-    static int Lua_IsBannerLoaded(lua_State *L)
-    {
-        DM_LUA_STACK_CHECK(L, 1);
-        bool is_loaded = IsBannerLoaded();
-        lua_pushboolean(L, is_loaded);
-        return 1;
-    }
+	static int Lua_IsRewardedLoaded(lua_State *L) {
+		DM_LUA_STACK_CHECK(L, 1);
+		bool is_loaded = IsRewardedLoaded();
+		lua_pushboolean(L, is_loaded);
+		return 1;
+	}
 
-    static int Lua_DestroyBanner(lua_State *L)
-    {
-        DM_LUA_STACK_CHECK(L, 0);
-        DestroyBanner();
-        return 0;
-    }
+	static int Lua_ShowRewarded(lua_State *L) {
+		DM_LUA_STACK_CHECK(L, 0);
+		ShowRewarded();
+		return 0;
+	}
 
-    static int Lua_ShowBanner(lua_State *L)
-    {
-        DM_LUA_STACK_CHECK(L, 0);
-        BannerPosition bannerPos_lua = POS_BOTTOM_CENTER;
-	    if (lua_type(L, 1) != LUA_TNONE) {
-	        bannerPos_lua = (BannerPosition)luaL_checknumber(L, 1);
-	    }
-	    ShowBanner(bannerPos_lua);
-        return 0;
-    }
+    // ------------------------------------------------------------------------------------------
 
-    static int Lua_HideBanner(lua_State *L)
-    {
-        DM_LUA_STACK_CHECK(L, 0);
-        HideBanner();
-        return 0;
-    }
+    static int Lua_LoadBanner(lua_State *L) {
+		DM_LUA_STACK_CHECK(L, 0);
+		if (lua_type(L, 1) != LUA_TSTRING) {
+			return DM_LUA_ERROR("Expected string, got %s. Wrong type for Banner UnitId variable '%s'.", luaL_typename(L, 1), lua_tostring(L, 1));
+		}
+		const char *unitId_lua = luaL_checkstring(L, 1);
+		int banner_width_lua = 0;
+		int banner_height_lua = 0;
+		if (lua_type(L, 2) != LUA_TNONE) {
+			banner_width_lua = luaL_checkinteger(L, 2);
+		}
+		if (lua_type(L, 3) != LUA_TNONE) {
+			banner_height_lua = luaL_checkinteger(L, 3);
+		}
+		LoadBanner(unitId_lua, banner_width_lua, banner_height_lua);
+		return 0;
+	}
+
+	static int Lua_IsBannerLoaded(lua_State *L) {
+		DM_LUA_STACK_CHECK(L, 1);
+		bool is_loaded = IsBannerLoaded();
+		lua_pushboolean(L, is_loaded);
+		return 1;
+	}
+
+	static int Lua_ShowBanner(lua_State *L) {
+		DM_LUA_STACK_CHECK(L, 0);
+		BannerPosition bannerPos_lua = POS_BOTTOM_CENTER;
+		if (lua_type(L, 1) != LUA_TNONE) {
+			bannerPos_lua = (BannerPosition)luaL_checknumber(L, 1);
+		}
+		ShowBanner(bannerPos_lua);
+		return 0;
+	}
+
+	static int Lua_HideBanner(lua_State *L) {
+		DM_LUA_STACK_CHECK(L, 0);
+		HideBanner();
+		return 0;
+	}
+
+	static int Lua_DestroyBanner(lua_State *L) {
+		DM_LUA_STACK_CHECK(L, 0);
+		DestroyBanner();
+		return 0;
+	}
 
     // ------------------------------------------------------------------------------------------
 
